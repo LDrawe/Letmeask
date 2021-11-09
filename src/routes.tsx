@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import NewRoom from './pages/NewRoom';
 
 import AuthContextProvider from './contexts/AuthContext';
+import Room from './pages/Room';
 
 export default function Routes () {
 	return (
@@ -12,6 +13,7 @@ export default function Routes () {
 				<Router>
 					<Route path="/" element={<Home />} />
 					<Route path="/rooms/new" element={<NewRoom />} />
+					<Route path="/rooms/:id" element={<Room />} />
 				</Router>
 			</AuthContextProvider>
 		</BrowserRouter>

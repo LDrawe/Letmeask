@@ -1,5 +1,8 @@
-import { Link } from 'react-router-dom';
+import { FormEvent, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from '../components/Button';
+import { ref, push } from 'firebase/database';
+import { database } from '../services/firebase';
 
 import illustration from '../assets/images/illustration.svg';
 import logo from '../assets/images/logo.svg';
@@ -7,8 +10,24 @@ import '../styles/auth.scss';
 import useAuth from '../hooks/useAuth';
 
 export default function NewRoom () {
-	const { user, signInWithGoogle } = useAuth();
-	console.log(user, signInWithGoogle);
+	const { user } = useAuth();
+	const navigation = useNavigate();
+	const [newRoom, setNewRoom] = useState('');
+
+	async function handleCreateNewRoom (event: FormEvent) {
+		event.preventDefault();
+
+		if (newRoom.trim() === '') {
+			return;
+		}
+
+		setNewRoom('');
+		const firebaseRoom = push(ref(database, 'rooms'), {
+			roomTitle: newRoom,
+			authorID: user?.id
+		}).key;
+		navigation(`rooms/${firebaseRoom}`);
+	}
 
 	return (
 		<div id="page-auth">
@@ -27,10 +46,12 @@ export default function NewRoom () {
 					<h2>
 						Criar uma nova sala
 					</h2>
-					<form>
+					<form onSubmit={handleCreateNewRoom}>
 						<input
 							type="text"
 							placeholder="Nome da sala"
+							value={newRoom}
+							onChange={event => setNewRoom(event.target.value)}
 						/>
 						<Button title="Criar Sala" />
 					</form>

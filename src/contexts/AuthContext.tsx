@@ -32,6 +32,7 @@ export default function AuthContextProvider (props: AuthContextProps) {
 			console.log(error);
 		}
 	}
+
 	useEffect(() => {
 		const unsubscribe = auth.onAuthStateChanged(user => {
 			if (user) {

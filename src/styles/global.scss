@@ -3,6 +3,13 @@
 	padding: 0;
 	box-sizing: border-box;
 }
+:root {
+	--primary-color: #835AFD;
+	--sub-text: #A8A8B3;
+	--pink: #E559F9;
+	--pure-white: #FFF;
+	--text: #29292E;
+}
 
 html, body, #root {
 	height: 100%;
@@ -10,7 +17,7 @@ html, body, #root {
 
 body {
 	background: #F8F8F8;
-	color: #29292e;
+	color: var(--text);
 }
 
 body, input, button, textarea {

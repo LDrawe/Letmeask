@@ -46,24 +46,29 @@
 
 ## :dart: About ##
 
-Describe your project
+Letmeask is an application developed during <abbr title="Next Level Week">NLW</abbr> that allows users to create rooms to receive questions and to answer them.
 
 ## :sparkles: Features ##
 
-:heavy_check_mark: Feature 1;\
-:heavy_check_mark: Feature 2;\
-:heavy_check_mark: Feature 3;
+:heavy_check_mark: Login with Google;\
+:heavy_check_mark: Create Room;\
+:heavy_check_mark: Join Room;\
+:heavy_check_mark: Create a question;\
+:heavy_check_mark: Answer a question;\
+:heavy_check_mark: Like a question;
 
 ## :rocket: Technologies ##
 
 The following tools were used in this project:
 
 - [React](https://pt-br.reactjs.org/)
+- [Firebase](https://firebase.google.com/)
+- [Sass](https://sass-lang.com/)
 - [TypeScript](https://www.typescriptlang.org/)
 
 ## :white_check_mark: Requirements ##
 
-Before starting :checkered_flag:, you need to have [Git](https://git-scm.com) and [Node](https://nodejs.org/en/) installed.
+Before starting, you need to have [Git](https://git-scm.com) and [Node](https://nodejs.org/en/) installed.
 
 ## :checkered_flag: Starting ##
 
@@ -80,15 +85,13 @@ $ yarn
 # Run the project
 $ yarn start
 
-# The server will initialize in the <http://localhost:3000>
+# The server will initialize in http://localhost:3000
 ```
 
 ## :memo: License ##
 
 This project is under license from MIT. For more details, see the [LICENSE](LICENSE.md) file.
 
-
-Made with :heart: by <a href="https://github.com/LDrawe" target="_blank">Eduardo Portilho</a>
 
 &#xa0;
 
