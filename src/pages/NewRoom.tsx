@@ -1,13 +1,15 @@
 import { FormEvent, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import useAuth from '../hooks/useAuth';
+
 import Button from '../components/Button';
+
 import { ref, push } from 'firebase/database';
 import { database } from '../services/firebase';
 
 import illustration from '../assets/images/illustration.svg';
 import logo from '../assets/images/logo.svg';
 import '../styles/auth.scss';
-import useAuth from '../hooks/useAuth';
 
 export default function NewRoom () {
 	const { user } = useAuth();
@@ -26,7 +28,7 @@ export default function NewRoom () {
 			roomTitle: newRoom,
 			authorID: user?.id
 		}).key;
-		navigation(`rooms/${firebaseRoom}`);
+		navigation(`/rooms/${firebaseRoom}`);
 	}
 
 	return (

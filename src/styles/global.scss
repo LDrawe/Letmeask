@@ -3,6 +3,7 @@
 	padding: 0;
 	box-sizing: border-box;
 }
+
 :root {
 	--primary-color: #835AFD;
 	--sub-text: #A8A8B3;
@@ -22,4 +23,8 @@ body {
 
 body, input, button, textarea {
 	font: 400 16px 'Roboto', sans-serif;
+}
+
+button {
+	cursor: pointer;
 }

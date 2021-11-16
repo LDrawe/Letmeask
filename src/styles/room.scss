@@ -13,6 +13,14 @@
 			> img {
 				max-height: 45px;
 			}
+
+			> div {
+				display: flex;
+				gap: 0 16px;
+				button {
+					height: 40px;
+				}
+			}
 		}
 	}
 
@@ -89,9 +97,12 @@
 					color: #835AFD;
 					text-decoration: underline;
 					font-size: 14px;
-					cursor: pointer;
 				}
 			}
 		}
+	}
+
+	.question-list {
+		margin-top: 32px;
 	}
 }

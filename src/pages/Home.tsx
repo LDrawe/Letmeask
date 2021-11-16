@@ -44,13 +44,17 @@ export default function Home () {
 					setErrorMessage('Esta sala não existe');
 					return;
 				}
+				if (snapshot.val().endedAt) {
+					setErrorMessage('Esta sala foi encerrada');
+					return;
+				}
 				navigation(`rooms/${roomCode}`);
 			}).catch(error => console.log(error));
 	}
 
 	return (
 		<div id="page-auth">
-			<aside>
+			<aside className="dis">
 				<img src={illustration} alt="Ilustração representando perguntas e respostas" />
 				<strong>
 					Crie salas de Q&amp;A ao-vivo
@@ -76,8 +80,8 @@ export default function Home () {
 							value={roomCode}
 							onChange={event => setRoomCode(event.target.value)}
 						/>
-						<Button title="Entrar na sala" />
 						{errorMessage && <p className="error">{errorMessage}</p>}
+						<Button title="Entrar na sala" />
 					</form>
 				</div>
 			</main>

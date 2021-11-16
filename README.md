@@ -1,11 +1,3 @@
-<div align="center" id="top"> 
-  <img src="./.github/app.gif" alt="Letmeask" />
-
-  &#xa0;
-
-  <!-- <a href="https://letmeask.netlify.app">Demo</a> -->
-</div>
-
 <h1 align="center">Letmeask</h1>
 
 <p align="center">
@@ -16,21 +8,7 @@
   <img alt="Repository size" src="https://img.shields.io/github/repo-size/LDrawe/letmeask?color=56BEB8">
 
   <img alt="License" src="https://img.shields.io/github/license/LDrawe/letmeask?color=56BEB8">
-
-  <!-- <img alt="Github issues" src="https://img.shields.io/github/issues/LDrawe/letmeask?color=56BEB8" /> -->
-
-  <!-- <img alt="Github forks" src="https://img.shields.io/github/forks/LDrawe/letmeask?color=56BEB8" /> -->
-
-  <!-- <img alt="Github stars" src="https://img.shields.io/github/stars/LDrawe/letmeask?color=56BEB8" /> -->
 </p>
-
-<!-- Status -->
-
-<!-- <h4 align="center"> 
-	🚧  Letmeask 🚀 Under construction...  🚧
-</h4> 
-
-<hr> -->
 
 <p align="center">
   <a href="#dart-about">About</a> &#xa0; | &#xa0; 
@@ -50,12 +28,12 @@ Letmeask is an application developed during <abbr title="Next Level Week">NLW</a
 
 ## :sparkles: Features ##
 
-:heavy_check_mark: Login with Google;\
-:heavy_check_mark: Create Room;\
-:heavy_check_mark: Join Room;\
-:heavy_check_mark: Create a question;\
-:heavy_check_mark: Answer a question;\
-:heavy_check_mark: Like a question;
+:heavy_check_mark: Login with Google\
+:heavy_check_mark: Create Room\
+:heavy_check_mark: Join Room\
+:heavy_check_mark: Create a question\
+:heavy_check_mark: Answer a question\
+:heavy_check_mark: Like a question
 
 ## :rocket: Technologies ##
 
