@@ -22,20 +22,22 @@
 
 <br>
 
-## :dart: About ##
+## :newspaper: About ##
 
-Letmeask is an application developed during <abbr title="Next Level Week">NLW</abbr> that allows users to create rooms to receive questions and to answer them.
+Letmeask is an application developed during <abbr title="Next Level Week">NLW</abbr>#06 that allows users to create rooms to receive and answer questions.
 
-## :sparkles: Features ##
+## :star2: Features ##
 
 :heavy_check_mark: Login with Google\
 :heavy_check_mark: Create Room\
 :heavy_check_mark: Join Room\
 :heavy_check_mark: Create a question\
 :heavy_check_mark: Answer a question\
+:heavy_check_mark: HighLight a question\
 :heavy_check_mark: Like a question
 
-## :rocket: Technologies ##
+## :test_tube: Technologies ##
+
 
 The following tools were used in this project:
 
@@ -48,7 +50,7 @@ The following tools were used in this project:
 
 Before starting, you need to have [Git](https://git-scm.com) and [Node](https://nodejs.org/en/) installed.
 
-## :checkered_flag: Starting ##
+## :rocket: Starting ##
 
 ```bash
 # Clone this project
@@ -63,8 +65,8 @@ $ yarn
 # Run the project
 $ yarn start
 
-# The server will initialize in http://localhost:3000
 ```
+The app will initialize in http://localhost:3000
 
 ## :memo: License ##
 

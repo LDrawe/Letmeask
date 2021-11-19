@@ -1,13 +1,24 @@
 import ReactTooltip from 'react-tooltip';
 
+import Toast from 'react-hot-toast';
+
 import { RoomCodeProps } from '../types/Room';
 
 import copy from '../assets/images/copy.svg';
+
 import '../styles/roomcode.scss';
 
 export default function RoomCode ({ code }: RoomCodeProps) {
 	function copyCodeToClipBoard () {
-		return navigator.clipboard.writeText(code);
+		navigator.clipboard.writeText(code);
+		return Toast.success(t => (
+			<span>
+				Copiado para a <br/>Área de Transferência!
+			<button onClick={() => Toast.dismiss(t.id)}>
+				Fechar
+			</button>
+			</span>
+		));
 	}
 
 	return (

@@ -15,8 +15,8 @@ export default function Routes () {
 					<Route path="/" element={<Home />} />
 					<Route path="/rooms/new" element={<NewRoom />} />
 
-					<Route path="/rooms/:id" element={<Room />} />
-					<Route path="/admin/rooms/:id" element={<AdminRoom />} />
+					<Route path="/rooms/:roomID" element={<Room />} />
+					<Route path="/admin/rooms/:roomID" element={<AdminRoom />} />
 				</Router>
 			</AuthContextProvider>
 		</BrowserRouter>

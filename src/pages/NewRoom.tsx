@@ -1,14 +1,17 @@
 import { FormEvent, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+
 import useAuth from '../hooks/useAuth';
 
 import Button from '../components/Button';
+import ThemeButton from '../components/ThemeButton';
 
 import { ref, push } from 'firebase/database';
 import { database } from '../services/firebase';
 
 import illustration from '../assets/images/illustration.svg';
 import logo from '../assets/images/logo.svg';
+
 import '../styles/auth.scss';
 
 export default function NewRoom () {
@@ -24,11 +27,12 @@ export default function NewRoom () {
 		}
 
 		setNewRoom('');
-		const firebaseRoom = push(ref(database, 'rooms'), {
+		const firebaseRoomRef = ref(database, 'rooms');
+		const firebaseRoom = push(firebaseRoomRef, {
 			roomTitle: newRoom,
 			authorID: user?.id
 		}).key;
-		navigation(`/rooms/${firebaseRoom}`);
+		navigation(`/admin/rooms/${firebaseRoom}`);
 	}
 
 	return (
@@ -36,7 +40,7 @@ export default function NewRoom () {
 			<aside>
 				<img src={illustration} alt="Ilustração representando perguntas e respostas" />
 				<strong>
-					Crie salas de Q&amp;A ao-vivo
+					Crie salas de Q&amp;A Ao-Vivo
 				</strong>
 				<p>
 					Tire as dúvidas da sua audiência em tempo real
@@ -45,6 +49,7 @@ export default function NewRoom () {
 			<main>
 				<div className="main-content">
 					<img src={logo} alt="Letmeask" />
+					<ThemeButton />
 					<h2>
 						Criar uma nova sala
 					</h2>

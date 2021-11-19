@@ -16,8 +16,8 @@ export default function useRoom (roomID: string) {
 	const [questions, setQuestions] = useState<QuestionType[]>([]);
 
 	useEffect(() => {
-		const roomref = ref(database, `rooms/${roomID}`);
-		const unsubscribeRoomListener = onValue(roomref, room => {
+		const roomRef = ref(database, `rooms/${roomID}`);
+		const unsubscribeRoomListener = onValue(roomRef, room => {
 			const databaseRoom = room.val();
 
 			if (!databaseRoom) {
@@ -26,13 +26,13 @@ export default function useRoom (roomID: string) {
 
 			setTitle(databaseRoom.roomTitle);
 			if (databaseRoom.questions) {
-				const questions = databaseRoom.questions as FirebaseQuestions;
+				const questions: FirebaseQuestions = databaseRoom.questions;
 				const parsedQuestions = Object.entries(questions).map(([key, value]) => ({
 					id: key,
 					content: value.content,
 					author: value.author,
 					isAnswered: value.isAnswered,
-					isHighlighted: value.isHighlighted,
+					isHighLighted: value.isHighLighted,
 					likeCount: Object.values(value.likes ?? {}).length,
 					likeID: Object.entries(value.likes ?? {}).find(([key, value]) => value.authorID === user?.id)?.[0]
 				}));

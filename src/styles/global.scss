@@ -6,18 +6,31 @@
 
 :root {
 	--primary-color: #835AFD;
+	--text: #29292E;
 	--sub-text: #A8A8B3;
 	--pink: #E559F9;
 	--pure-white: #FFF;
-	--text: #29292E;
+	--question-bg: #FEFEFE;
+	--questionAnswered: #DBDCDD;
 }
+
+[data-theme="dark"] {
+    --primary-color: #9A97F3;
+	--text: #EEEEFF;
+	--sub-text: #818CAB;
+	--pink: #B35EBE;
+	--pure-white: #30303b;
+	--question-bg: rgba(78, 78, 78, 0.493);
+	--question-Answered: #885faa73;
+}
+
 
 html, body, #root {
 	height: 100%;
 }
 
 body {
-	background: #F8F8F8;
+	background-color: var(--pure-white);
 	color: var(--text);
 }
 

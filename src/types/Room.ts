@@ -3,5 +3,5 @@ export interface RoomCodeProps {
 }
 
 export interface RoomParamsType {
-	id: string;
+	roomID: string;
 }

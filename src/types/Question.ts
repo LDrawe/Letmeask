@@ -6,5 +6,7 @@ export interface QuestionProps {
 		name: string;
 		avatar: string;
 	}
-	children?: ReactNode
+	children?: ReactNode;
+	isAnswered?: boolean;
+	isHighLighted?: boolean;
 };

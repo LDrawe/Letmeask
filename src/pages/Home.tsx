@@ -1,15 +1,18 @@
 import { useState, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import Button from '../components/Button';
+import ThemeToggle from '../components/ThemeButton';
+
+import useAuth from '../hooks/useAuth';
 
 import { ref, get, child } from 'firebase/database';
 import { database } from '../services/firebase';
 
-import useAuth from '../hooks/useAuth';
-
 import illustration from '../assets/images/illustration.svg';
 import logo from '../assets/images/logo.svg';
 import google from '../assets/images/google-icon.svg';
+
 import '../styles/auth.scss';
 
 export default function Home () {
@@ -19,14 +22,14 @@ export default function Home () {
 	const [roomCode, setRoomCode] = useState('');
 	const [errorMessage, setErrorMessage] = useState('');
 
-	async function handleCreateRoom () {
+	async function createRoom () {
 		if (!user) {
 			await signInWithGoogle().catch(error => console.log(error));
 		}
 		navigation('/rooms/new');
 	}
 
-	async function handleJoinRoom (event: FormEvent) {
+	async function joinRoom (event: FormEvent) {
 		event.preventDefault();
 
 		if (errorMessage) {
@@ -38,18 +41,15 @@ export default function Home () {
 		}
 
 		const roomRef = ref(database);
-		get(child(roomRef, `rooms/${roomCode}`))
+		const roomCodeRef = child(roomRef, `rooms/${roomCode}`);
+		get(roomCodeRef)
 			.then(snapshot => {
-				if (!snapshot.exists()) {
-					setErrorMessage('Esta sala não existe');
-					return;
-				}
-				if (snapshot.val().endedAt) {
-					setErrorMessage('Esta sala foi encerrada');
-					return;
-				}
+				if (!snapshot.exists()) return setErrorMessage('Esta sala não existe');
+
+				if (snapshot.val().endedAt) return setErrorMessage('Esta sala foi encerrada');
+
 				navigation(`rooms/${roomCode}`);
-			}).catch(error => console.log(error));
+			}).catch(error => console.warn(error));
 	}
 
 	return (
@@ -57,7 +57,7 @@ export default function Home () {
 			<aside className="dis">
 				<img src={illustration} alt="Ilustração representando perguntas e respostas" />
 				<strong>
-					Crie salas de Q&amp;A ao-vivo
+					Crie salas de Q&amp;A Ao-Vivo
 				</strong>
 				<p>
 					Tire as dúvidas da sua audiência em tempo real
@@ -66,21 +66,24 @@ export default function Home () {
 			<main>
 				<div className="main-content">
 					<img src={logo} alt="Letmeask" />
-					<button className="create-room" onClick={handleCreateRoom}>
+					<ThemeToggle />
+					<button className="create-room" onClick={createRoom}>
 						<img src={google} alt="Google" />
 						Crie sua sala com o Google
 					</button>
 					<div className="separator">
 						ou entre em uma sala
 					</div>
-					<form onSubmit={handleJoinRoom}>
+					<form onSubmit={joinRoom}>
 						<input
 							type="text"
 							placeholder="Digite o código da sala"
 							value={roomCode}
 							onChange={event => setRoomCode(event.target.value)}
 						/>
-						{errorMessage && <p className="error">{errorMessage}</p>}
+						{errorMessage && (
+							<p className="error">{errorMessage}</p>
+						)}
 						<Button title="Entrar na sala" />
 					</form>
 				</div>

@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
-import UserType from './User';
+
+import { UserType } from './User';
 
 export interface AuthContextType {
 	user: UserType | undefined;

@@ -1,11 +1,24 @@
+import cx from 'classnames';
+
 import { QuestionProps } from '../types/Question';
 
 import '../styles/question.scss';
 
-export default function Question ({ content, author, children }: QuestionProps) {
+export default function Question ({
+	content,
+	author,
+	isAnswered = false,
+	isHighLighted = false,
+	children
+}: QuestionProps) {
 	return (
-		<div className="question">
-			<p>{content}</p>
+		<div className={cx('question',
+			{ answered: isAnswered },
+			{ highlighted: isHighLighted && !isAnswered }
+		)}>
+			<p>
+				{content}
+			</p>
 			<footer>
 				<div className="user-info">
 					<img src={author.avatar} alt={author.name} />

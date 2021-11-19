@@ -4,8 +4,8 @@
 	min-height: 100%;
 
 	aside {
-		background-color: var(--primary-color);
-		color: var(--pure-white);
+		background-color: #835AFD;
+		color: #FFF;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
@@ -46,6 +46,7 @@
 
 		> img {
 			align-self: center;
+			margin-bottom: 30px;
 		}
 
 		form {
@@ -60,6 +61,7 @@
 				padding: 0 16px;
 				background: var(--pure-white);
 				border: 1px solid var(--sub-text);
+				color: var(--text);
 			}
 
 			button {
@@ -69,7 +71,7 @@
 
 		h2 {
 			font-size: 24px;
-			margin: 64px 0 24px;
+			margin: 40px 0 24px;
 			font-family: 'Poppins', sans-serif;
 		}
 
@@ -83,18 +85,18 @@
 		}
 
 		.error {
-			color: red;
+			color: #FF3C3C;
 		}
 	}
 
 	.create-room {
-		margin-top: 64px;
+		margin-top: 40px;
 		height: 50px;
 		border-radius: 8px;
 		font-weight: 500;
 		background-color: var(--pure-white);
 		border: 1px solid #919191;
-		color: #333;
+		color: var(--text);
 
 		display: flex;
 		justify-content: center;
@@ -147,7 +149,7 @@
 		}
 
 		main {
-			margin: 10px 0;
+			margin: 10px 0 20px;
 		}
 	}
 }

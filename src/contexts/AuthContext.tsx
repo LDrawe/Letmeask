@@ -3,7 +3,7 @@ import { useState, useEffect, createContext } from 'react';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth } from '../services/firebase';
 
-import UserType from '../types/User';
+import { UserType } from '../types/User';
 import { AuthContextType, AuthContextProps } from '../types/AuthContext';
 
 export const AuthContext = createContext({} as AuthContextType);
@@ -29,7 +29,7 @@ export default function AuthContextProvider (props: AuthContextProps) {
 				});
 			}
 		} catch (error) {
-			console.log(error);
+			console.warn(error);
 		}
 	}
 
@@ -50,9 +50,7 @@ export default function AuthContextProvider (props: AuthContextProps) {
 			}
 		});
 
-		return () => {
-			unsubscribe();
-		};
+		return unsubscribe;
 	}, []);
 
 	return (
