@@ -8,10 +8,7 @@ import { database } from '../services/firebase';
 import useAuth from '../hooks/useAuth';
 import useRoom from '../hooks/useRoom';
 
-import Button from '../components/Button';
-import RoomCode from '../components/RoomCode';
-import Question from '../components/Question';
-import ThemeToggle from '../components/ThemeButton';
+import { Button, RoomCode, Question, ThemeButton } from '../components';
 
 import { RoomParamsType } from '../types/Room';
 
@@ -74,7 +71,7 @@ export default function Room () {
 				<div className="content">
 					<img src={logo} alt="Logo" />
 					<div>
-						<ThemeToggle />
+						<ThemeButton />
 						<Button
 							title="Sair"
 							onClick={() => navigation('/')}

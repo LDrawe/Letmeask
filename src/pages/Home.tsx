@@ -1,8 +1,7 @@
 import { useState, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import Button from '../components/Button';
-import ThemeToggle from '../components/ThemeButton';
+import { Button, ThemeButton } from '../components';
 
 import useAuth from '../hooks/useAuth';
 
@@ -17,6 +16,7 @@ import '../styles/auth.scss';
 
 export default function Home () {
 	const navigation = useNavigate();
+
 	const { user, signInWithGoogle } = useAuth();
 
 	const [roomCode, setRoomCode] = useState('');
@@ -24,7 +24,7 @@ export default function Home () {
 
 	async function createRoom () {
 		if (!user) {
-			await signInWithGoogle().catch(error => console.log(error));
+			await signInWithGoogle().catch(error => console.warn(error));
 		}
 		navigation('/rooms/new');
 	}
@@ -66,7 +66,7 @@ export default function Home () {
 			<main>
 				<div className="main-content">
 					<img src={logo} alt="Letmeask" />
-					<ThemeToggle />
+					<ThemeButton />
 					<button className="create-room" onClick={createRoom}>
 						<img src={google} alt="Google" />
 						Crie sua sala com o Google

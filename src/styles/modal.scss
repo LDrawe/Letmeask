@@ -1,0 +1,41 @@
+.modal-content {
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+
+	img {
+		margin-bottom: 30px;
+	}
+
+	h2 {
+		color: var(--text);
+		font-size: 25px;
+		margin-bottom: 18px;
+	}
+
+	p {
+		margin-bottom: 40px;
+		color: #737380;
+	}
+
+	svg {
+		stroke: #D73754;
+	}
+
+	button {
+		border:0;
+		padding: 15px 30px;
+		border-radius: 8px;
+		background-color: #DBDCDD;
+		color: #737380;
+	}
+
+	button + button {
+		margin-left: 10px;
+		background-color: #D73754;
+		color: white;
+	}
+}

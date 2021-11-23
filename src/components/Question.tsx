@@ -1,6 +1,6 @@
 import cx from 'classnames';
 
-import { QuestionProps } from '../types/Question';
+import { QuestionProps } from '../types/Components';
 
 import '../styles/question.scss';
 

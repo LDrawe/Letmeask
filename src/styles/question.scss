@@ -73,8 +73,9 @@
 				padding: 2px 4px;
 
 				&.highlighted {
-					background-color: #d0b6ff31;
-					border: 1px solid #835AFD;
+					svg path {
+						stroke: var(--primary-color);
+					}
 				}
 			}
 		}
@@ -102,6 +103,7 @@
 				background-color: transparent;
 				transition: filter 0.2s;
 				display: flex;
+
 				&:hover {
 					filter: brightness(80%);
 				}

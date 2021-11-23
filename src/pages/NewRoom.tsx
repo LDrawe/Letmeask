@@ -3,8 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import useAuth from '../hooks/useAuth';
 
-import Button from '../components/Button';
-import ThemeButton from '../components/ThemeButton';
+import { Button, ThemeButton } from '../components';
 
 import { ref, push } from 'firebase/database';
 import { database } from '../services/firebase';

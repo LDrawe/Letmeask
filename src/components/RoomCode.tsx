@@ -1,5 +1,4 @@
 import ReactTooltip from 'react-tooltip';
-
 import Toast from 'react-hot-toast';
 
 import { RoomCodeProps } from '../types/Room';

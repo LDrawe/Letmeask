@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import ReactTooltip from 'react-tooltip';
@@ -8,17 +9,14 @@ import { database } from '../services/firebase';
 
 import useRoom from '../hooks/useRoom';
 
-import Button from '../components/Button';
-import RoomCode from '../components/RoomCode';
-import Question from '../components/Question';
-import ThemeToggle from '../components/ThemeButton';
+import { Button, Modal, ThemeButton, Question, RoomCode } from '../components';
 
 import { RoomParamsType } from '../types/Room';
 
 import logo from '../assets/images/logo.svg';
 import deleteimg from '../assets/images/delete.svg';
 import checkimg from '../assets/images/check.svg';
-import answerimg from '../assets/images/answer.svg';
+// import answerimg from '../assets/images/answer.svg';
 
 import '../styles/room.scss';
 
@@ -26,13 +24,21 @@ export default function AdminRoom () {
 	const { roomID } = useParams() as RoomParamsType;
 	const navigation = useNavigate();
 
+	const [isOpen, setIsOpen] = useState(false);
+	const [endRoomModal, setEndRoomModal] = useState(false);
+
 	const { questions, title } = useRoom(roomID);
 
+	let modalQuestionID: string = '';
+
 	function deleteQuestion (questionID: string) {
-		if (confirm('Tem certeza que deseja deletar esta pergunta ?')) {
-			const questionRef = ref(database, `rooms/${roomID}/questions/${questionID}`);
-			remove(questionRef);
-		}
+		const questionRef = ref(database, `rooms/${roomID}/questions/${questionID}`);
+		remove(questionRef);
+	}
+
+	function handleDelete (questionID: string) {
+		modalQuestionID = questionID;
+		setIsOpen(true);
 	}
 
 	function highLightQuestion (questionID: string, questionBool: boolean) {
@@ -49,27 +55,43 @@ export default function AdminRoom () {
 		});
 	}
 
+	function openEndRoomModal () {
+		setEndRoomModal(true);
+	}
+
 	function endRoom () {
-		if (confirm('Tem certeza que deseja encerrar esta sala ?')) {
-			const roomRef = ref(database, `rooms/${roomID}`);
-			update(roomRef, {
-				endedAt: Date.now()
-			});
-			navigation('/');
-		}
+		const roomRef = ref(database, `rooms/${roomID}`);
+		update(roomRef, {
+			endedAt: Date.now()
+		});
+		navigation('/');
 	}
 
 	return (
 		<div id="page-room">
 			<Toaster position="top-center" />
+			<Modal
+				title="Excluir pergunta"
+				subTitle="Tem certeza que deseja excluir esta pergunta ?"
+				callback={() => deleteQuestion(modalQuestionID)}
+				isOpen={isOpen}
+				closeModal={() => setIsOpen(false)}
+			/>
+			<Modal
+				title="Encerrar Sala"
+				subTitle="Tem certeza que deseja encerrar esta sala ?"
+				callback={endRoom}
+				isOpen={endRoomModal}
+				closeModal={() => setEndRoomModal(false)}
+			/>
 			<header>
 				<div className="content">
 					<img src={logo} alt="Logo" />
 					<div>
-						<ThemeToggle />
+						<ThemeButton />
 						<Button
 							title="Encerrar Sala"
-							onClick={endRoom}
+							onClick={openEndRoomModal}
 							isOutlined
 						/>
 						<RoomCode code={roomID} />
@@ -83,49 +105,53 @@ export default function AdminRoom () {
 					<span>{questions.length} pergunta{questions.length === 1 ? '' : 's'}</span>
 				</div>
 				<div className="question-list">
-					{questions.map(question => (
-						<Question
-							key={question.id}
-							content={question.content}
-							author={question.author}
-							isAnswered={question.isAnswered}
-							isHighLighted={question.isHighLighted}
-						>
-							{!question.isAnswered && (
-								<>
-									<button
-										type="button"
-										onClick={() => markQuestionAsAnswered(question.id)}
-										data-tip="Marcar pergunta como respondida"
-										data-delay-show="300"
-									>
-										<img src={checkimg} alt="Marcar pergunta como respondida" />
-										<ReactTooltip />
-									</button>
-									<button
-										type="button"
-										className={cx('',
-											{ highlighted: question.isHighLighted && !question.isAnswered }
-										)}
-										onClick={() => highLightQuestion(question.id, question.isHighLighted)}
-										data-tip="Destacar pergunta"
-										data-delay-show="300"
-									>
-										<img src={answerimg} alt="Destacar pergunta" />
-										<ReactTooltip />
-									</button>
-								</>)}
-							<button
-								type="button"
-								onClick={() => deleteQuestion(question.id)}
-								data-tip="Deletar pergunta"
-								data-delay-show="300"
+					{questions.length > 0
+						? questions.map(question => (
+							<Question
+								key={question.id}
+								content={question.content}
+								author={question.author}
+								isAnswered={question.isAnswered}
+								isHighLighted={question.isHighLighted}
 							>
-								<img src={deleteimg} alt="Deletar pergunta" />
-								<ReactTooltip />
-							</button>
-						</Question>
-					))}
+								{!question.isAnswered && (
+									<>
+										<button
+											type="button"
+											onClick={() => markQuestionAsAnswered(question.id)}
+											data-tip="Marcar pergunta como respondida"
+											data-delay-show="300"
+										>
+											<img src={checkimg} alt="Marcar pergunta como respondida" />
+											<ReactTooltip />
+										</button>
+										<button
+											type="button"
+											className={cx('',
+												{ highlighted: question.isHighLighted && !question.isAnswered }
+											)}
+											onClick={() => highLightQuestion(question.id, question.isHighLighted)}
+											data-tip="Destacar pergunta"
+											data-delay-show="300"
+										>
+											<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+												<path fillRule="evenodd" clipRule="evenodd" d="M12 17.9999H18C19.657 17.9999 21 16.6569 21 14.9999V6.99988C21 5.34288 19.657 3.99988 18 3.99988H6C4.343 3.99988 3 5.34288 3 6.99988V14.9999C3 16.6569 4.343 17.9999 6 17.9999H7.5V20.9999L12 17.9999Z" stroke="#737380" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+											</svg>
+											<ReactTooltip />
+										</button>
+									</>)}
+								<button
+									type="button"
+									onClick={() => handleDelete(question.id)}
+									data-tip="Deletar pergunta"
+									data-delay-show="300"
+								>
+									<img src={deleteimg} alt="Deletar pergunta" />
+									<ReactTooltip />
+								</button>
+							</Question>
+						))
+						: <div>temnadaaqui</div>}
 				</div>
 			</main>
 		</div>

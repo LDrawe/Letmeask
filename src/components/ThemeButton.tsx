@@ -1,10 +1,9 @@
-import { useState, ChangeEvent } from 'react';
+import { useState } from 'react';
+import { CheckBoxType } from '../types/Components';
 
 import '../styles/themebutton.scss';
 
-type CheckBoxType = ChangeEvent<HTMLInputElement>;
-
-export default function ThemeToggle () {
+export default function ThemeButton () {
     const defaultTheme = localStorage.getItem('@letmeask:darkMode');
 
     const [dark, setDark] = useState(defaultTheme === 'true');
