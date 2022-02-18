@@ -44,12 +44,12 @@ export default function Modal ({
                 <p>
                     {subTitle}
                 </p>
-                <div>
+                <div className='buttons-container'>
+                <button onClick={callback}>
+                        Sim, excluir
+                    </button>
                     <button onClick={closeModal}>
                         Cancelar
-                    </button>
-                    <button onClick={callback}>
-                        Sim, excluir
                     </button>
                 </div>
             </div>

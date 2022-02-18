@@ -21,6 +21,7 @@ export default function Room () {
 	const { roomID } = useParams() as RoomParamsType;
 
 	const [newQuestion, setNewQuestion] = useState('');
+	const [posting, setPosting] = useState(false);
 
 	const { user } = useAuth();
 	const { questions, title } = useRoom(roomID);
@@ -29,25 +30,25 @@ export default function Room () {
 		event.preventDefault();
 
 		if (!user) {
-			throw new Error('You\'re not supposed to be here');
+			throw new Error('Você não está logado');
 		}
 
-		if (newQuestion.trim() === '') {
-			return;
+		if (newQuestion.trim() !== '') {
+			setPosting(true);
+			const question = {
+				content: newQuestion,
+				author: {
+					name: user.name,
+					avatar: user.avatar
+				},
+				isHighLighted: false,
+				isAnswered: false
+			};
+
+			const questionsRef = ref(database, `rooms/${roomID}/questions`);
+			push(questionsRef, question).catch(error => console.warn(error));
+			setPosting(false);
 		}
-
-		const question = {
-			content: newQuestion,
-			author: {
-				name: user.name,
-				avatar: user.avatar
-			},
-			isHighLighted: false,
-			isAnswered: false
-		};
-
-		const questionsRef = ref(database, `rooms/${roomID}/questions`);
-		push(questionsRef, question).catch(error => console.warn(error));
 
 		setNewQuestion('');
 	}
@@ -68,17 +69,17 @@ export default function Room () {
 		<div id="page-room">
 			<Toaster />
 			<header>
-				<div className="content">
+				<div className='header-buttons'>
 					<img src={logo} alt="Logo" />
-					<div>
-						<ThemeButton />
-						<Button
-							title="Sair"
-							onClick={() => navigation('/')}
-							isOutlined
-						/>
-						<RoomCode code={roomID} />
-					</div>
+					<ThemeButton />
+				</div>
+				<div className='control-buttons'>
+					<Button
+						title="Sair"
+						onClick={() => navigation('/')}
+						isOutlined
+					/>
+					<RoomCode code={roomID} />
 				</div>
 			</header>
 
@@ -111,7 +112,7 @@ export default function Room () {
 								</span>
 							)
 						}
-						<Button type="submit" title="Enviar Pergunta" disabled={!user} />
+						<Button type="submit" title={posting ? 'Enviando ...' : 'Enviar Pergunta'} disabled={!user} />
 					</div>
 				</form>
 				<div className="question-list">

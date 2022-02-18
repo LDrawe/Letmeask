@@ -1,13 +1,5 @@
-import Button from './Button';
-import RoomCode from './RoomCode';
-import Question from './Question';
-import ThemeButton from './ThemeButton';
-import Modal from './Modal';
-
-export {
-    Button,
-    RoomCode,
-    Question,
-    ThemeButton,
-    Modal
-};
+export { default as Modal } from './Modal';
+export { default as Button } from './Button';
+export { default as RoomCode } from './RoomCode';
+export { default as Question } from './Question';
+export { default as ThemeButton } from './ThemeButton';

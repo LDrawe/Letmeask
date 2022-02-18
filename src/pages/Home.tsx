@@ -22,6 +22,8 @@ export default function Home () {
 	const [roomCode, setRoomCode] = useState('');
 	const [errorMessage, setErrorMessage] = useState('');
 
+	const [clicked, setClicked] = useState(false);
+
 	async function createRoom () {
 		if (!user) {
 			await signInWithGoogle().catch(error => console.warn(error));
@@ -36,20 +38,23 @@ export default function Home () {
 			setErrorMessage('');
 		}
 
-		if (roomCode.trim() === '') {
-			return;
-		}
+		if (roomCode) {
+			try {
+				setClicked(true);
+				const roomRef = ref(database);
+				const roomCodeRef = child(roomRef, `rooms/${roomCode}`);
+				const snapshot = await get(roomCodeRef);
 
-		const roomRef = ref(database);
-		const roomCodeRef = child(roomRef, `rooms/${roomCode}`);
-		get(roomCodeRef)
-			.then(snapshot => {
-				if (!snapshot.exists()) return setErrorMessage('Esta sala não existe');
+				if (!snapshot.exists()) setErrorMessage('Esta sala não existe');
 
-				if (snapshot.val().endedAt) return setErrorMessage('Esta sala foi encerrada');
+				if (snapshot.val().endedAt) setErrorMessage('Esta sala foi encerrada');
 
 				navigation(`rooms/${roomCode}`);
-			}).catch(error => console.warn(error));
+			} catch (error) {
+				setClicked(false);
+				console.warn(error);
+			}
+		}
 	}
 
 	return (
@@ -79,12 +84,12 @@ export default function Home () {
 							type="text"
 							placeholder="Digite o código da sala"
 							value={roomCode}
-							onChange={event => setRoomCode(event.target.value)}
+							onChange={event => setRoomCode(event.target.value.trim())}
 						/>
 						{errorMessage && (
 							<p className="error">{errorMessage}</p>
 						)}
-						<Button title="Entrar na sala" />
+						<Button title={clicked ? 'Entrando ...' : 'Entrar na sala'} disabled={clicked} />
 					</form>
 				</div>
 			</main>

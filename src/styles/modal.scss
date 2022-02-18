@@ -29,13 +29,24 @@
 		border:0;
 		padding: 15px 30px;
 		border-radius: 8px;
+		background-color: #D73754;
+		color: white;
+	}
+
+	button + button {
 		background-color: #DBDCDD;
 		color: #737380;
 	}
 
-	button + button {
-		margin-left: 10px;
-		background-color: #D73754;
-		color: white;
+	.buttons-container {
+		display: flex;
+		align-items: center;
+		gap: 16px;
+	}
+
+	@media (max-width:360px) {
+		.buttons-container {
+			flex-direction: column;
+		}
 	}
 }

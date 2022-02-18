@@ -4,7 +4,7 @@ import { Toaster } from 'react-hot-toast';
 import ReactTooltip from 'react-tooltip';
 import cx from 'classnames';
 
-import { ref, remove, update } from '@firebase/database';
+import { ref, update, remove } from '@firebase/database';
 import { database } from '../services/firebase';
 
 import useRoom from '../hooks/useRoom';
@@ -16,8 +16,7 @@ import { RoomParamsType } from '../types/Room';
 import logo from '../assets/images/logo.svg';
 import deleteimg from '../assets/images/delete.svg';
 import checkimg from '../assets/images/check.svg';
-// import answerimg from '../assets/images/answer.svg';
-
+import empty from '../assets/images/empty-questions.svg';
 import '../styles/room.scss';
 
 export default function AdminRoom () {
@@ -29,15 +28,16 @@ export default function AdminRoom () {
 
 	const { questions, title } = useRoom(roomID);
 
-	let modalQuestionID: string = '';
+	const [modalQuestionID, setModalQuestionID] = useState('');
 
 	function deleteQuestion (questionID: string) {
 		const questionRef = ref(database, `rooms/${roomID}/questions/${questionID}`);
 		remove(questionRef);
+		setIsOpen(false);
 	}
 
 	function handleDelete (questionID: string) {
-		modalQuestionID = questionID;
+		setModalQuestionID(questionID);
 		setIsOpen(true);
 	}
 
@@ -73,9 +73,13 @@ export default function AdminRoom () {
 			<Modal
 				title="Excluir pergunta"
 				subTitle="Tem certeza que deseja excluir esta pergunta ?"
-				callback={() => deleteQuestion(modalQuestionID)}
+				callback={() => {
+					console.log(modalQuestionID);
+					deleteQuestion(modalQuestionID);
+				}}
 				isOpen={isOpen}
 				closeModal={() => setIsOpen(false)}
+				ariaHideApp={false}
 			/>
 			<Modal
 				title="Encerrar Sala"
@@ -83,19 +87,20 @@ export default function AdminRoom () {
 				callback={endRoom}
 				isOpen={endRoomModal}
 				closeModal={() => setEndRoomModal(false)}
+				ariaHideApp={false}
 			/>
 			<header>
-				<div className="content">
+				<div className='header-buttons'>
 					<img src={logo} alt="Logo" />
-					<div>
-						<ThemeButton />
-						<Button
-							title="Encerrar Sala"
-							onClick={openEndRoomModal}
-							isOutlined
-						/>
-						<RoomCode code={roomID} />
-					</div>
+					<ThemeButton />
+				</div>
+				<div className='control-buttons'>
+					<Button
+						title="Encerrar Sala"
+						onClick={openEndRoomModal}
+						isOutlined
+					/>
+					<RoomCode code={roomID} />
 				</div>
 			</header>
 
@@ -151,7 +156,14 @@ export default function AdminRoom () {
 								</button>
 							</Question>
 						))
-						: <div>temnadaaqui</div>}
+						: <div className='empty'>
+							<img src={empty} />
+							<h3>Nenhuma pergunta por aqui</h3>
+							<p>
+								Envie o código dessa sala para seus amigos e comece a responder perguntas
+							</p>
+						</div>
+					}
 				</div>
 			</main>
 		</div>
